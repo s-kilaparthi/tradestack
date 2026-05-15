@@ -2,21 +2,33 @@
 __pycache__/
 *.pyc
 *.pyo
-*.egg-info/
 .env
 
-# Docker
-.docker/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl
 
-# IDE files
+# Ansible
+*.retry
+
+# Kubernetes
+*.kubeconfig
+
+# AWS
+*.pem
+*.key
+
+# IDE
 .vscode/
 .idea/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
-# Secrets (IMPORTANT!)
-*.pem
-*.key
+# Secrets - NEVER commit these!
 secrets/
+credentials/
