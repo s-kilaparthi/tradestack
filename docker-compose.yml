@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # Database - stores historical prices
+  postgres:
+    image: postgres:15-alpine
+    container_name: tradestack-postgres
+    environment:
+      POSTGRES_DB: tradestack
+      POSTGRES_USER: tradestack
+      POSTGRES_PASSWORD: tradestack123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  # Cache - stores live prices
+  redis:
+    image: redis:7-alpine
+    container_name: tradestack-redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  # Message broker
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: tradestack-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    restart: always
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: tradestack-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    restart: always
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: tradestack-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: tradestack-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=tradestack123
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: always
+
+volumes:
+  postgres-data:
+  grafana-data:
