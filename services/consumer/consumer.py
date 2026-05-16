@@ -3,6 +3,7 @@ import redis
 import psycopg2
 from kafka import KafkaConsumer
 from datetime import datetime
+import os
 
 def validate_message(data):
     """Check if message has all required fields"""
@@ -36,14 +37,18 @@ if __name__ == '__main__':
     )
     # Connect to PostgreSQL
     db = psycopg2.connect(
-        host='postgres',
-        database='tradestack',
-        user='tradestack',
-        password='tradestack123'
+        host=os.environ.get('DB_HOST', 'postgres'),
+        database=os.environ.get('DB_NAME', 'tradestack'),
+        user=os.environ.get('DB_USER', 'tradestack'),
+        password=os.environ.get('DB_PASSWORD', '')
     )
     cursor = db.cursor()
     # Connect to Redis
-    cache = redis.Redis(host='redis', port=6379, decode_responses=True)
+        cache = redis.Redis(
+        host=os.environ.get('REDIS_HOST', 'redis'),
+        port=int(os.environ.get('REDIS_PORT', 6379)),
+        decode_responses=True
+    )
 
     print("🚀 TradeStack Consumer Started!")
     print("👂 Listening for stock prices...")
