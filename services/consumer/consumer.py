@@ -5,7 +5,7 @@ import psycopg2
 from kafka import KafkaConsumer
 from datetime import datetime
 
-# ── TESTABLE FUNCTIONS (no database needed) ──────────────────
+# ── TESTABLE FUNCTIONS (no database needed) ──────────
 
 def validate_message(data):
     """Check if message has all required fields"""
