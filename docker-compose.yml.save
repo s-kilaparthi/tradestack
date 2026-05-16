@@ -82,9 +82,8 @@ services:
   consumer:
     build: ./services/consumer
     container_name: tradestack-consumer
-    env_file:
-      - .env
     depends_on:
+
       - kafka
       - postgres
       - redis
