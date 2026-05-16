@@ -1,0 +1,12 @@
+---
+- name: Clone TradeStack repository
+  git:
+    repo: https://github.com/s-kilaparthi/tradestack.git
+    dest: /home/ubuntu/tradestack
+    version: main
+
+- name: Start TradeStack with Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: /home/ubuntu/tradestack
+

@@ -1,0 +1,7 @@
+---
+- name: Setup TradeStack Server
+  hosts: tradestack_servers
+  become: yes
+  roles:
+    - docker
+    - tradestack
