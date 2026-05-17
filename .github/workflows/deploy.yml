@@ -20,8 +20,10 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs: DB_HOST,DB_NAME,DB_USER,DB_PASSWORD,REDIS_HOST,REDIS_PORT
           script: |
+            # Cleanup before deploy
+            docker system prune -f
+
             # Create .env file from GitHub Secrets
             cat > /home/ubuntu/tradestack/.env << EOF
             DB_HOST=${{ secrets.DB_HOST }}
