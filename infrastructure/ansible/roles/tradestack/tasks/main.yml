@@ -4,6 +4,7 @@
     repo: https://github.com/s-kilaparthi/tradestack.git
     dest: /home/ubuntu/tradestack
     version: main
+    force: yes
 
 - name: Create .env file from vault secrets
   copy:
