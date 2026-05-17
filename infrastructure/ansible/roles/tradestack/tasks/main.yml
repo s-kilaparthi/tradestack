@@ -5,6 +5,19 @@
     dest: /home/ubuntu/tradestack
     version: main
 
+- name: Create .env file from vault secrets
+  copy:
+    content: |
+      DB_HOST={{ db_host }}
+      DB_NAME={{ db_name }}
+      DB_USER={{ db_user }}
+      DB_PASSWORD={{ db_password }}
+      REDIS_HOST={{ redis_host }}
+      REDIS_PORT={{ redis_port }}
+    dest: /home/ubuntu/tradestack/.env
+    mode: '0600'
+
+
 - name: Start TradeStack with Docker Compose
   command: docker-compose up -d
   args:
