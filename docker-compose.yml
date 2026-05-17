@@ -79,7 +79,7 @@ services:
     restart: always
 
   producer:
-    build: ./services/producer
+    image: skilaparthi/tradestack-producer:latest
     container_name: tradestack-producer
     mem_limit: 64m
     depends_on:
@@ -87,7 +87,7 @@ services:
     restart: always
 
   consumer:
-    build: ./services/consumer
+    image: skilaparthi/tradestack-consumer:latest
     container_name: tradestack-consumer
     mem_limit: 64m
     env_file:
