@@ -35,10 +35,11 @@ jobs:
             EOF
 
             cd /home/ubuntu/tradestack
-            git pull origin main
-            docker-compose down
-            docker-compose pull
-            docker-compose up -d
+            docker-compose down        # stop containers first
+            docker system prune -a -f  # remove ALL images
+            git pull origin main       # get latest code
+            docker-compose pull        # pull fresh images
+            docker-compose up -d       # start everything
 
       - name: Deployment Summary
         if: success()
