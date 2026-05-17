@@ -54,6 +54,11 @@ resource "aws_instance" "tradestack_server" {
   vpc_security_group_ids = [aws_security_group.tradestack_sg.id]
   key_name               = var.key_name
 
+  root_block_device {
+    volume_size = var.disk_size
+    volume_type = "gp3"
+  }
+
   tags = {
     Name        = "${var.project_name}-server"
     Environment = var.environment

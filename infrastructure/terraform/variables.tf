@@ -22,3 +22,8 @@ variable "key_name" {
   description = "AWS key pair name for SSH access"
   default     = "karthik-devops-key"
 }
+
+variable "disk_size" {
+  description = "EC2 root volume size in GB"
+  default     = 20
+}

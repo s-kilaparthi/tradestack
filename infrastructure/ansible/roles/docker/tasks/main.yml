@@ -21,3 +21,11 @@
     name: ubuntu
     groups: docker
     append: yes
+
+- name: Expand root partition
+  command: growpart /dev/nvme0n1 1
+  ignore_errors: yes
+
+- name: Resize filesystem
+  command: resize2fs /dev/nvme0n1p1
+  ignore_errors: yes
