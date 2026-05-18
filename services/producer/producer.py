@@ -1,5 +1,6 @@
 import json
 import time
+import os
 import yfinance as yf
 from kafka import KafkaProducer
 from datetime import datetime
@@ -24,7 +25,7 @@ def fetch_stock_price(symbol):
 if __name__ == '__main__':
      # Connect to Kafka
     producer = KafkaProducer(
-        bootstrap_servers=['kafka:29092'],
+        bootstrap_servers=[os.environ.get('KAFKA_BROKER','kafka:29092')],
         value_serializer=lambda x: json.dumps(x).encode('utf-8')
     )
     print("🚀 TradeStack Producer Started!")
