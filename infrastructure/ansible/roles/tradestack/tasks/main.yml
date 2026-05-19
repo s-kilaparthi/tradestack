@@ -24,3 +24,19 @@
   args:
     chdir: /home/ubuntu/tradestack
 
+- name: Wait for PostgreSQL to be ready
+  wait_for:
+    host: localhost
+    port: 5432
+    delay: 10
+    timeout: 60
+
+- name: Create stock_prices table
+  command: >
+    docker exec tradestack-postgres psql -U tradestack -d tradestack -c
+    "CREATE TABLE IF NOT EXISTS stock_prices (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(10) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    volume BIGINT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"
