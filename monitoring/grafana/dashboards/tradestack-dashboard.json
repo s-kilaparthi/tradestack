@@ -1,636 +1,83 @@
 {
-  "annotations": [
+  "title": "TradeStack - Stock Monitor",
+  "uid": "tradestack",
+  "schemaVersion": 27,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
     {
-      "kind": "AnnotationQuery",
-      "spec": {
-        "builtIn": true,
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "query": {
-          "datasource": {
-            "name": "-- Grafana --"
-          },
-          "group": "grafana",
-          "kind": "DataQuery",
-          "spec": {},
-          "version": "v0"
+      "id": 1,
+      "title": "AAPL Stock Price",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "datasource": "PostgreSQL",
+      "targets": [
+        {
+          "rawSql": "SELECT timestamp AS time, price FROM stock_prices WHERE symbol = 'AAPL' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "A"
         }
-      }
-    }
-  ],
-  "cursorSync": "Off",
-  "editable": true,
-  "elements": {
-    "panel-1": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT\r\n  timestamp AS time,\r\n  price\r\nFROM stock_prices\r\nWHERE symbol = 'AAPL'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 1,
-        "links": [],
-        "title": "AAPL Stock Price",
-        "vizConfig": {
-          "group": "timeseries",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "axisBorderShow": false,
-                  "axisCenteredZero": false,
-                  "axisColorMode": "text",
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "barWidthFactor": 0.6,
-                  "drawStyle": "line",
-                  "fillOpacity": 0,
-                  "gradientMode": "none",
-                  "hideFrom": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": false
-                  },
-                  "insertNulls": false,
-                  "lineInterpolation": "linear",
-                  "lineWidth": 1,
-                  "pointSize": 5,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "auto",
-                  "showValues": false,
-                  "spanNulls": false,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "none"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                },
-                "unit": "currencyUSD"
-              },
-              "overrides": []
-            },
-            "options": {
-              "annotations": {
-                "clustering": -1,
-                "multiLane": false
-              },
-              "legend": {
-                "calcs": [],
-                "displayMode": "list",
-                "placement": "bottom",
-                "showLegend": true
-              },
-              "tooltip": {
-                "hideZeros": false,
-                "mode": "single",
-                "sort": "none"
-              }
-            }
-          },
-          "version": "13.0.1"
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
         }
       }
     },
-    "panel-2": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT timestamp AS time, price AS \"AAPL\"\r\nFROM stock_prices WHERE symbol = 'AAPL'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              },
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT timestamp AS time, price AS \"GOOGL\"\r\nFROM stock_prices WHERE symbol = 'GOOGL'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "B"
-                }
-              },
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT timestamp AS time, price AS \"TSLA\"\r\nFROM stock_prices WHERE symbol = 'TSLA'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "C"
-                }
-              },
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT timestamp AS time, price AS \"MSFT\"\r\nFROM stock_prices WHERE symbol = 'MSFT'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "D"
-                }
-              },
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT timestamp AS time, price AS \"AMZN\"\r\nFROM stock_prices WHERE symbol = 'AMZN'\r\nORDER BY timestamp ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "E"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
+    {
+      "id": 2,
+      "title": "All Stocks - Price Overview",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "datasource": "PostgreSQL",
+      "targets": [
+        {
+          "rawSql": "SELECT timestamp AS time, price AS \"AAPL\" FROM stock_prices WHERE symbol = 'AAPL' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "A"
         },
-        "description": "",
-        "id": 2,
-        "links": [],
-        "title": "All Stocks - Price Overview",
-        "vizConfig": {
-          "group": "timeseries",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "axisBorderShow": false,
-                  "axisCenteredZero": false,
-                  "axisColorMode": "text",
-                  "axisLabel": "",
-                  "axisPlacement": "auto",
-                  "barAlignment": 0,
-                  "barWidthFactor": 0.6,
-                  "drawStyle": "line",
-                  "fillOpacity": 0,
-                  "gradientMode": "none",
-                  "hideFrom": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": false
-                  },
-                  "insertNulls": false,
-                  "lineInterpolation": "linear",
-                  "lineWidth": 1,
-                  "pointSize": 5,
-                  "scaleDistribution": {
-                    "type": "linear"
-                  },
-                  "showPoints": "auto",
-                  "showValues": false,
-                  "spanNulls": false,
-                  "stacking": {
-                    "group": "A",
-                    "mode": "none"
-                  },
-                  "thresholdsStyle": {
-                    "mode": "off"
-                  }
-                },
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                },
-                "unit": "currencyUSD"
-              },
-              "overrides": []
-            },
-            "options": {
-              "annotations": {
-                "clustering": -1,
-                "multiLane": false
-              },
-              "legend": {
-                "calcs": [],
-                "displayMode": "list",
-                "placement": "bottom",
-                "showLegend": true
-              },
-              "tooltip": {
-                "hideZeros": false,
-                "mode": "single",
-                "sort": "none"
-              }
-            }
-          },
-          "version": "13.0.1"
+        {
+          "rawSql": "SELECT timestamp AS time, price AS \"GOOGL\" FROM stock_prices WHERE symbol = 'GOOGL' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "B"
+        },
+        {
+          "rawSql": "SELECT timestamp AS time, price AS \"TSLA\" FROM stock_prices WHERE symbol = 'TSLA' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "C"
+        },
+        {
+          "rawSql": "SELECT timestamp AS time, price AS \"MSFT\" FROM stock_prices WHERE symbol = 'MSFT' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "D"
+        },
+        {
+          "rawSql": "SELECT timestamp AS time, price AS \"AMZN\" FROM stock_prices WHERE symbol = 'AMZN' ORDER BY timestamp ASC",
+          "format": "time_series",
+          "refId": "E"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD"
         }
       }
     },
-    "panel-3": {
-      "kind": "Panel",
-      "spec": {
-        "data": {
-          "kind": "QueryGroup",
-          "spec": {
-            "queries": [
-              {
-                "kind": "PanelQuery",
-                "spec": {
-                  "hidden": false,
-                  "query": {
-                    "datasource": {
-                      "name": "bfm6e5w5gum80f"
-                    },
-                    "group": "grafana-postgresql-datasource",
-                    "kind": "DataQuery",
-                    "spec": {
-                      "dataset": "tradestack",
-                      "editorMode": "code",
-                      "format": "table",
-                      "rawQuery": true,
-                      "rawSql": "SELECT \r\n  symbol,\r\n  price,\r\n  timestamp\r\nFROM stock_prices\r\nWHERE (symbol, timestamp) IN (\r\n  SELECT symbol, MAX(timestamp)\r\n  FROM stock_prices\r\n  GROUP BY symbol\r\n)\r\nORDER BY symbol ASC",
-                      "sql": {
-                        "columns": [
-                          {
-                            "parameters": [],
-                            "type": "function"
-                          }
-                        ],
-                        "groupBy": [
-                          {
-                            "property": {
-                              "type": "string"
-                            },
-                            "type": "groupBy"
-                          }
-                        ],
-                        "limit": 50
-                      }
-                    },
-                    "version": "v0"
-                  },
-                  "refId": "A"
-                }
-              }
-            ],
-            "queryOptions": {},
-            "transformations": []
-          }
-        },
-        "description": "",
-        "id": 3,
-        "links": [],
-        "title": "Current Stock Prices",
-        "vizConfig": {
-          "group": "table",
-          "kind": "VizConfig",
-          "spec": {
-            "fieldConfig": {
-              "defaults": {
-                "color": {
-                  "mode": "palette-classic"
-                },
-                "custom": {
-                  "align": "auto",
-                  "cellOptions": {
-                    "type": "auto"
-                  },
-                  "footer": {
-                    "reducers": []
-                  },
-                  "inspect": false
-                },
-                "thresholds": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              "overrides": []
-            },
-            "options": {
-              "cellHeight": "sm",
-              "showHeader": true
-            }
-          },
-          "version": "13.0.1"
-        }
-      }
-    }
-  },
-  "layout": {
-    "kind": "GridLayout",
-    "spec": {
-      "items": [
+    {
+      "id": 3,
+      "title": "Current Stock Prices",
+      "type": "table",
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8},
+      "datasource": "PostgreSQL",
+      "targets": [
         {
-          "kind": "GridLayoutItem",
-          "spec": {
-            "element": {
-              "kind": "ElementReference",
-              "name": "panel-1"
-            },
-            "height": 8,
-            "width": 12,
-            "x": 0,
-            "y": 0
-          }
-        },
-        {
-          "kind": "GridLayoutItem",
-          "spec": {
-            "element": {
-              "kind": "ElementReference",
-              "name": "panel-2"
-            },
-            "height": 8,
-            "width": 12,
-            "x": 12,
-            "y": 0
-          }
-        },
-        {
-          "kind": "GridLayoutItem",
-          "spec": {
-            "element": {
-              "kind": "ElementReference",
-              "name": "panel-3"
-            },
-            "height": 8,
-            "width": 12,
-            "x": 0,
-            "y": 8
-          }
+          "rawSql": "SELECT symbol, price, timestamp FROM stock_prices WHERE (symbol, timestamp) IN (SELECT symbol, MAX(timestamp) FROM stock_prices GROUP BY symbol) ORDER BY symbol ASC",
+          "format": "table",
+          "refId": "A"
         }
       ]
     }
-  },
-  "links": [],
-  "liveNow": false,
-  "preferences": {
-    "layout": {
-      "kind": "GridLayout",
-      "spec": {
-        "items": []
-      }
-    }
-  },
-  "preload": false,
-  "tags": [],
-  "timeSettings": {
-    "autoRefresh": "",
-    "autoRefreshIntervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "fiscalYearStartMonth": 0,
-    "from": "2026-05-15T22:25:15.899Z",
-    "hideTimepicker": false,
-    "timezone": "browser",
-    "to": "2026-05-15T22:25:17.036Z"
-  },
-  "title": "Tradestack",
-  "variables": []
+  ],
+  "time": {"from": "now-6h", "to": "now"},
+  "timepicker": {}
 }
