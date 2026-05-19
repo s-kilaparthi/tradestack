@@ -20,6 +20,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          command_timeout: 5m
           script: |
             # Cleanup before deploy
             docker system prune -f
