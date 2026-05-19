@@ -1,6 +1,5 @@
 {
   "title": "TradeStack - Stock Monitor",
-  "uid": "tradestack",
   "schemaVersion": 27,
   "version": 1,
   "refresh": "30s",
