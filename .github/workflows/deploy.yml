@@ -9,6 +9,7 @@ jobs:
   deploy:
     name: Deploy to AWS EC2
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
@@ -20,12 +21,12 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          command_timeout: 10m
+          command_timeout: 20m
           script: |
-            # Cleanup before deploy
-            docker system prune -f
+            # Step 1: Clean only stopped containers (keep cached images!)
+            docker container prune -f
 
-            # Create .env file from GitHub Secrets
+            # Step 2: Create .env file from GitHub Secrets
             cat > /home/ubuntu/tradestack/.env << EOF
             DB_HOST=${{ secrets.DB_HOST }}
             DB_NAME=${{ secrets.DB_NAME }}
@@ -35,15 +36,24 @@ jobs:
             REDIS_PORT=${{ secrets.REDIS_PORT }}
             EOF
 
-            cd /home/ubuntu/tradestack
-            git pull origin main       # get latest code
+            # Fix .env permissions
+            chmod 644 /home/ubuntu/tradestack/.env
 
-            # Only pull images that change (producer & consumer)
+            # Step 3: Get latest code
+            cd /home/ubuntu/tradestack
+            git pull origin main
+
+            # Step 4: Only pull images that actually change
             docker pull skilaparthi/tradestack-producer:latest
             docker pull skilaparthi/tradestack-consumer:latest
 
-            docker-compose down        # stop containers first
-            docker-compose up -d       # start everything
+            # Step 5: Restart containers
+            docker-compose down
+            docker-compose up -d
+
+            # Step 6: Verify deployment
+            sleep 10
+            docker ps
 
       - name: Deployment Summary
         if: success()
@@ -64,3 +74,4 @@ jobs:
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Commit | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Author | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
