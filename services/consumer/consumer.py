@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # Connect to Kafka (message broker)
     consumer = KafkaConsumer(
         'stock-prices',
-        bootstrap_servers=['kafka:29092'],
+        bootstrap_servers=[os.environ.get('KAFKA_BROKER','kafka:29092')],
         value_deserializer=lambda x: json.loads(x.decode('utf-8')),
         auto_offset_reset='earliest',
         group_id='tradestack-consumer'
