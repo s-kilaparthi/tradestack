@@ -20,6 +20,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          command_timeout: 10m
           script: |
             # Cleanup before deploy
             docker system prune -f
@@ -35,10 +36,13 @@ jobs:
             EOF
 
             cd /home/ubuntu/tradestack
-            docker-compose down        # stop containers first
-            docker system prune -a -f  # remove ALL images
             git pull origin main       # get latest code
-            docker-compose pull        # pull fresh images
+
+            # Only pull images that change (producer & consumer)
+            docker pull skilaparthi/tradestack-producer:latest
+            docker pull skilaparthi/tradestack-consumer:latest
+
+            docker-compose down        # stop containers first
             docker-compose up -d       # start everything
 
       - name: Deployment Summary
