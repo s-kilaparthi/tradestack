@@ -46,6 +46,8 @@ jobs:
             # Step 4: Only pull images that actually change
             docker pull skilaparthi/tradestack-producer:latest
             docker pull skilaparthi/tradestack-consumer:latest
+            docker pull grafana/grafana:10.4.0
+
 
             # Step 5: Restart containers
             docker-compose down
