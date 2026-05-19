@@ -53,6 +53,7 @@ resource "aws_instance" "tradestack_server" {
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.tradestack_sg.id]
   key_name               = var.key_name
+  iam_instance_profile   = aws_iam_instance_profile.tradestack_profile.name
 
   root_block_device {
     volume_size = var.disk_size
@@ -72,4 +73,48 @@ resource "aws_eip" "tradestack_ip" {
   tags = {
     Name = "${var.project_name}-eip"
   }
+}
+
+
+# IAM Role for EC2
+resource "aws_iam_role" "tradestack_role" {
+  name = "${var.project_name}-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Allow EC2 to read Secrets Manager
+resource "aws_iam_role_policy" "secrets_policy" {
+  name = "${var.project_name}-secrets-policy"
+  role = aws_iam_role.tradestack_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = "arn:aws:secretsmanager:us-east-2:169588426254:secret:tradestack/*"
+      }
+    ]
+  })
+}
+
+# Instance profile to attach role to EC2
+resource "aws_iam_instance_profile" "tradestack_profile" {
+  name = "${var.project_name}-profile"
+  role = aws_iam_role.tradestack_role.name
 }
