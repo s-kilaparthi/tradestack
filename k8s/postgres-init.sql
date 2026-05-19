@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS stock_prices (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(10) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    volume BIGINT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
