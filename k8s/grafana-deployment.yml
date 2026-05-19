@@ -23,9 +23,20 @@ spec:
             secretKeyRef:
               name: tradestack-secrets
               key: GRAFANA_PASSWORD
-
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - name: dashboards
+          mountPath: /var/lib/grafana/dashboards
+        - name: provisioning
+          mountPath: /etc/grafana/provisioning/dashboards
+      volumes:
+      - name: dashboards
+        configMap:
+          name: grafana-dashboard
+      - name: provisioning
+        configMap:
+          name: grafana-provisioning
 ---
 apiVersion: v1
 kind: Service
@@ -37,4 +48,5 @@ spec:
   ports:
   - port: 3000
     targetPort: 3000
+    nodePort: 30000
   type: NodePort
