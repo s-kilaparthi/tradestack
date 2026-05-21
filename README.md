@@ -190,6 +190,28 @@ aws ec2 stop-instances --instance-ids <instance-id> --region us-east-2
 aws ec2 start-instances --instance-ids <instance-id> --region us-east-2
 ```
 
+### GitHub Secrets Required
+
+Before CD pipeline can deploy, add these secrets to your GitHub repo:
+`Settings → Secrets and variables → Actions → New repository secret`
+
+| Secret | Description |
+|--------|-------------|
+| `EC2_HOST` | Your EC2 public IP (update after each new instance) |
+| `EC2_USER` | `ubuntu` |
+| `EC2_SSH_KEY` | Contents of your `.pem` key file |
+| `DB_HOST` | `postgres` |
+| `DB_NAME` | `tradestack` |
+| `DB_USER` | `tradestack` |
+| `DB_PASSWORD` | Your database password |
+| `REDIS_HOST` | `redis` |
+| `REDIS_PORT` | `6379` |
+| `DOCKERHUB_USERNAME` | Your Docker Hub username |
+| `DOCKERHUB_TOKEN` | Your Docker Hub access token |
+
+> ⚠️ **Important:** Update `EC2_HOST` secret every time you create 
+> a new EC2 instance with Terraform!
+
 ---
 
 ## CI/CD Pipeline
