@@ -320,7 +320,7 @@ The hardest part wasn't the tools — it was understanding **why** each piece ex
 
 **Siva Karthik Kilaparthi**
 - GitHub: [@s-kilaparthi](https://github.com/s-kilaparthi)
-- LinkedIn: [Your LinkedIn URL]
+  
 
 ---
 
